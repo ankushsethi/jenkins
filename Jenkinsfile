@@ -27,6 +27,7 @@ pipeline {
       }
       steps {
         echo 'Checkout Code'
+        sh 'git clone https://github.com/ankushsethi/jenkins.git'
       }
     }
 
