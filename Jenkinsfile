@@ -17,8 +17,8 @@ pipeline {
           }
           steps {
             echo 'Building Source Code'
-            sh '''mkdir -p /opt/jmeter
-cd /opt/jmeter
+            sh '''mkdir -p /home/jenkins/jmeter
+cd /home/jenkins/jmeter
 curl -O https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
 tar -xzf apache-jmeter-5.6.3.tgz
 rm apache-jmeter-5.6.3.tgz'''
@@ -54,7 +54,8 @@ rm apache-jmeter-5.6.3.tgz'''
       }
       steps {
         echo 'Checkout Code'
-        sh 'git clone https://github.com/ankushsethi/jenkins.git'
+        sh '''rm -rf jenkins
+git clone https://github.com/ankushsethi/jenkins.git'''
       }
     }
 
