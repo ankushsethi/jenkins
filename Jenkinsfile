@@ -7,14 +7,37 @@ pipeline {
   }
   stages {
     stage('Build') {
-      agent {
-        node {
-          label 'master'
+      parallel {
+        stage('Build on Master') {
+          agent {
+            node {
+              label 'master'
+            }
+
+          }
+          steps {
+            echo 'Building Source Code'
+            sh '''curl -s -O https://raw.githubusercontent.com/ankushsethi/jenkins/refs/heads/main/install_jmeter.sh
+chmod +x install_jmeter.sh
+./install_jmeter.sh'''
+          }
         }
 
-      }
-      steps {
-        echo 'Building Source Code'
+        stage('Build on Node1') {
+          agent {
+            node {
+              label 'node1'
+            }
+
+          }
+          steps {
+            echo 'Building on Node1'
+            sh '''curl -s -O https://raw.githubusercontent.com/ankushsethi/jenkins/refs/heads/main/install_jmeter.sh
+chmod +x install_jmeter.sh
+./install_jmeter.sh'''
+          }
+        }
+
       }
     }
 
