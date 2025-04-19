@@ -17,9 +17,11 @@ pipeline {
           }
           steps {
             echo 'Building Source Code'
-            sh '''curl -s -O https://raw.githubusercontent.com/ankushsethi/jenkins/refs/heads/main/install_jmeter.sh
-chmod +x install_jmeter.sh
-./install_jmeter.sh'''
+            sh '''mkdir -p /opt/jmeter
+cd /opt/jmeter
+curl -O https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+tar -xzf apache-jmeter-5.6.3.tgz
+rm apache-jmeter-5.6.3.tgz'''
           }
         }
 
@@ -32,9 +34,11 @@ chmod +x install_jmeter.sh
           }
           steps {
             echo 'Building on Node1'
-            sh '''curl -s -O https://raw.githubusercontent.com/ankushsethi/jenkins/refs/heads/main/install_jmeter.sh
-chmod +x install_jmeter.sh
-./install_jmeter.sh'''
+            sh '''mkdir -p /opt/jmeter
+cd /opt/jmeter
+curl -O https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+tar -xzf apache-jmeter-5.6.3.tgz
+rm apache-jmeter-5.6.3.tgz'''
           }
         }
 
