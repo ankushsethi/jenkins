@@ -6,8 +6,8 @@ JMETER_DIR="/opt/jmeter"
 JMETER_TGZ="apache-jmeter-${JMETER_VERSION}.tgz"
 JMETER_URL="https://downloads.apache.org//jmeter/binaries/${JMETER_TGZ}"
 
-# 📁 Create target directory
-sudo mkdir -p "$JMETER_DIR"
+# 📁 Create directory if it doesn't exist
+mkdir -p "$JMETER_DIR"
 cd "$JMETER_DIR" || exit 1
 
 # 🔽 Download JMeter
@@ -16,10 +16,10 @@ wget -q "$JMETER_URL"
 
 # 📦 Extract JMeter
 echo "Extracting JMeter..."
-sudo tar -xzf "$JMETER_TGZ"
+tar -xzf "$JMETER_TGZ"
 
-# ✅ Set permissions
-sudo chmod -R 755 "$JMETER_DIR/apache-jmeter-${JMETER_VERSION}"
+# ✅ Set permissions (optional in Docker)
+chmod -R 755 "$JMETER_DIR/apache-jmeter-${JMETER_VERSION}"
 
 # 🧹 Cleanup
 rm -f "$JMETER_TGZ"
