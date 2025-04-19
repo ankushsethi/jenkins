@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'master'
+    }
+
+  }
   stages {
     stage('Build') {
       agent {
@@ -25,7 +30,7 @@ pipeline {
       }
     }
 
-    stage('Smoke Test') {
+    stage('Test Runs') {
       parallel {
         stage('Smoke Test') {
           agent {
@@ -54,20 +59,27 @@ pipeline {
       }
     }
 
-    stage('Reports') {
-      parallel {
-        stage('Smoke Test Report') {
-          steps {
-            echo 'Sending Reports To Tester'
-          }
+    stage('Smoke Test Report') {
+      agent {
+        node {
+          label 'master'
         }
 
-        stage('Regression Test Report') {
-          steps {
-            echo 'Sending Report To Tester'
-          }
+      }
+      steps {
+        echo 'Sending Reports To Tester'
+      }
+    }
+
+    stage('Regression Test Report') {
+      agent {
+        node {
+          label 'node1'
         }
 
+      }
+      steps {
+        echo 'Sending Report To Tester'
       }
     }
 
