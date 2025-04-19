@@ -70,6 +70,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
           }
           steps {
             echo 'Executing Smoke Test'
+            sh 'sh /home/jenkins/jmeter/apache-jmeter-5.6.3/bin/jmeter.sh -n -t /var/jenkins_home/workspace/jenkins_main/jmeter_script.jmx -l /var/jenkins_home/workspace/jenkins_main/Smoke_Test.jtl'
           }
         }
 
@@ -82,6 +83,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
           }
           steps {
             echo 'Executing Regression Test'
+            sh 'sh /home/jenkins/jmeter/apache-jmeter-5.6.3/bin/jmeter.sh -n -t /home/jenkins/agent/workspace/jenkins_main/jmeter_script.jmx -l /home/jenkins/agent/workspace/jenkins_main/Regression_Test.jtl'
           }
         }
 
