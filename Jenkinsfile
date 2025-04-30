@@ -66,6 +66,11 @@ git clone https://github.com/ankushsethi/jenkins.git'''
         }
 
       }
+      steps {
+        echo 'Checkout Code'
+        sh '''rm -rf jenkins
+git clone https://github.com/ankushsethi/jenkins.git'''
+      }
     }
 
     stage('Test Runs') {
