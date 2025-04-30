@@ -60,16 +60,16 @@ git clone https://github.com/ankushsethi/jenkins.git'''
     }
 
     stage('Sonar Quality Gate Check') {
-     agent {
+      agent {
         node {
           label 'master'
         }
 
       }
       steps {
-        echo 'Checkout Code'
-        sh '''rm -rf jenkins
-git clone https://github.com/ankushsethi/jenkins.git'''
+        echo 'SonarQube Quality Gate Check'
+        withSonarQubeEnv 'sonarqube'
+        waitForQualityGate(abortPipeline: true)
       }
     }
 
