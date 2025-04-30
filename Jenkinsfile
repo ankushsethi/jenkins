@@ -59,25 +59,20 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       }
     }
 
-    stage('Sonar Quality Gate Check') {
-      agent {
-        node {
-          label 'master'
-        }
-
-      }
-      steps {
-        echo 'SonarQube Env Setup'
-        environment {
-        scannerHome = tool 'SonarQube Scanner' // the name you have given the Sonar Scanner (in Global Tool Configuration)
-    }
-    steps {
-        withSonarQubeEnv(installationName: 'SonarQube') {
-            sh "${scannerHome}/bin/sonar-scanner -X"
-        }
-    }
-      }
-    }
+stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
 
     stage("Quality Gate"){
           timeout(time: 1, unit: 'HOURS') {
