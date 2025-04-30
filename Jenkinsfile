@@ -67,11 +67,26 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
       }
       steps {
-        echo 'SonarQube Quality Gate Check'
-        withSonarQubeEnv 'sonarqube'
-        waitForQualityGate(abortPipeline: true)
+        echo 'SonarQube Env Setup'
+        environment {
+        scannerHome = tool 'SonarQube Scanner' // the name you have given the Sonar Scanner (in Global Tool Configuration)
+    }
+    steps {
+        withSonarQubeEnv(installationName: 'SonarQube') {
+            sh "${scannerHome}/bin/sonar-scanner -X"
+        }
+    }
       }
     }
+
+    stage("Quality Gate"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }
 
     stage('Test Runs') {
       parallel {
