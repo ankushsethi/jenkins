@@ -58,35 +58,35 @@ rm apache-jmeter-5.6.3.tgz'''
 git clone https://github.com/ankushsethi/jenkins.git'''
       }
     }
-  stage('SonarQube Analysis') {
-            steps {
-                // Perform the SonarQube Code Analysis
-                withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with your SonarQube Server Name
-                    sh """
-                        ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectKey=jenkins \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://192.168.1.31:9000 \
-                        -Dsonar.login=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
-                        """
-                }
-            }
+
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh """
+                                  ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
+                                  -Dsonar.projectKey=jenkins \
+                                  -Dsonar.sources=. \
+                                  -Dsonar.host.url=http://192.168.1.31:9000 \
+                                  -Dsonar.login=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
+                                  """
         }
 
-        stage('Quality Gate') {
-            steps {
-                script {
-                    // Wait for the Quality Gate result with a timeout and fail the build if it fails
-                    timeout(time: 5, unit: 'MINUTES') {
-                        def qg = waitForQualityGate() // This checks the SonarQube Quality Gate result
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted because Quality Gate failed: ${qg.status}"
-                        }
-                    }
-                }
+      }
+    }
+
+    stage('Quality Gate') {
+      steps {
+        script {
+          timeout(time: 5, unit: 'MINUTES') {
+            def qg = waitForQualityGate() // This checks the SonarQube Quality Gate result
+            if (qg.status != 'OK') {
+              error "Pipeline aborted because Quality Gate failed: ${qg.status}"
             }
+          }
         }
 
+      }
+    }
 
     stage('Test Runs') {
       parallel {
