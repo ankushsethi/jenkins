@@ -114,5 +114,12 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       }
     }
 
+    stage('Notify Stakeholders') {
+      agent any
+      steps {
+        emailext(subject: 'Pipeline Status', to: 'ankush.sethi@epam.com', from: 'admin@jenkins.org', body: 'Pipeline Passed')
+      }
+    }
+
   }
 }
