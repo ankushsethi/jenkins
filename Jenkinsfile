@@ -5,6 +5,12 @@ pipeline {
     }
 
   }
+
+  environment {
+        // Use the name of the SonarQube Scanner configured in Manage Jenkins > Global Tool Configuration
+        SONARQUBE_SCANNER_HOME = tool 'SonarQube Scanner'
+    }
+  
   stages {
     stage('Build') {
       parallel {
