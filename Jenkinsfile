@@ -59,6 +59,10 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       }
     }
 
+    stage('Checkout') {
+     
+    }
+
     stage('Test Runs') {
       parallel {
         stage('Smoke Test') {
