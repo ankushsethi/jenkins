@@ -59,8 +59,13 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       }
     }
 
-    stage('Checkout') {
-     
+    stage('Sonar Quality Gate Check') {
+     agent {
+        node {
+          label 'master'
+        }
+
+      }
     }
 
     stage('Test Runs') {
