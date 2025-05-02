@@ -61,14 +61,14 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
     stage('SonarQube Analysis') {
       steps {
-        withSonarQubeEnv('SonarQube') {
+        withSonarQubeEnv('SonarQubeScanner') {
           sh """
-                                                      ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
-                                                      -Dsonar.projectKey=jenkins \
-                                                      -Dsonar.sources=. \
-                                                      -Dsonar.host.url=http://192.168.1.31:9000 \
-                                                      -Dsonar.login=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
-                                                      """
+                                                                ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
+                                                                -Dsonar.projectKey=jenkins \
+                                                                -Dsonar.sources=. \
+                                                                -Dsonar.host.url=http://192.168.1.31:9000 \
+                                                                -Dsonar.login=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
+                                                                """
         }
 
       }
