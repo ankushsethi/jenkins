@@ -20,8 +20,7 @@ pipeline {
             sh '''mkdir -p /home/jenkins/jmeter
 cd /home/jenkins/jmeter
 curl -O https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
-tar -xzf apache-jmeter-5.6.3.tgz
-rm apache-jmeter-5.6.3.tgz'''
+tar -xzf apache-jmeter-5.6.3.tgz'''
           }
         }
 
@@ -37,8 +36,7 @@ rm apache-jmeter-5.6.3.tgz'''
             sh '''mkdir -p /home/jenkins/jmeter
 cd /home/jenkins/jmeter
 curl -O https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
-tar -xzf apache-jmeter-5.6.3.tgz
-rm apache-jmeter-5.6.3.tgz'''
+tar -xzf apache-jmeter-5.6.3.tgz'''
           }
         }
 
@@ -61,7 +59,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
     stage('SonarQube Analysis') {
       steps {
-        withSonarQubeEnv('SonarQube Scanner') {
+        withSonarQubeEnv('SonarQube') {
           sh """
                                                                 ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
                                                                 -Dsonar.projectKey=jenkins \
@@ -153,6 +151,6 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
   }
   environment {
-    SONARQUBE_SCANNER_HOME = 'SonarQube Scanner'
+    SONARQUBE_SCANNER_HOME = tool 'SonarQube Scanner'
   }
 }
