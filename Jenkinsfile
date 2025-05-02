@@ -65,16 +65,14 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
       }
       steps {
-        sh '''echo Resolved SonarQube Scanner path: ${SONARQUBE_SCANNER_HOME}
-ls -l ${SONARQUBE_SCANNER_HOME}/bin'''
         withSonarQubeEnv('SonarQube') {
           sh """
-                                           ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
-                                           -Dsonar.projectKey=jenkins \
-                                           -Dsonar.sources=. \
-                                           -Dsonar.host.url=http://192.168.1.31:9000 \
-                                           -Dsonar.token=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
-                                           """
+                                                     ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
+                                                     -Dsonar.projectKey=jenkins \
+                                                     -Dsonar.sources=. \
+                                                     -Dsonar.host.url=http://192.168.1.31:9000 \
+                                                     -Dsonar.token=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
+                                                     """
         }
 
       }
@@ -164,6 +162,6 @@ ls -l ${SONARQUBE_SCANNER_HOME}/bin'''
 
   }
   environment {
-    SONARQUBE_SCANNER_HOME = 'SonarQube Scanner'
+    SONARQUBE_SCANNER_HOME = 'SonarQubeScanner'
   }
 }
