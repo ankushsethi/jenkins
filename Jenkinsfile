@@ -61,7 +61,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
     stage('SonarQube Analysis') {
       steps {
-        withSonarQubeEnv('SonarQubeScanner') {
+        withSonarQubeEnv('SonarQube Scanner') {
           sh """
                                                                 ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
                                                                 -Dsonar.projectKey=jenkins \
