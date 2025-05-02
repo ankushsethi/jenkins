@@ -61,12 +61,12 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       steps {
         withSonarQubeEnv('SonarQube') {
           sh """
-                                                                ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
-                                                                -Dsonar.projectKey=jenkins \
-                                                                -Dsonar.sources=. \
-                                                                -Dsonar.host.url=http://192.168.1.31:9000 \
-                                                                -Dsonar.login=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
-                                                                """
+             ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
+             -Dsonar.projectKey=jenkins \
+             -Dsonar.sources=. \
+             -Dsonar.host.url=http://192.168.1.31:9000 \
+             -Dsonar.token=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
+             """
         }
 
       }
@@ -78,7 +78,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
         script {
           timeout(time: 5, unit: 'MINUTES') {
             def qg = waitForQualityGate() // This checks the SonarQube Quality Gate result
-            if (qg.status != 'OK') {
+            if (qg.status != 'OK' || qg.status != 'SUCCESS') {
               error "Pipeline aborted because Quality Gate failed: ${qg.status}"
             }
           }
