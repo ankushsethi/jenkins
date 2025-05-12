@@ -23,7 +23,7 @@ pipeline {
                 JMETER_TARBALL="/home/jenkins/jmeter/apache-jmeter-5.6.3.tgz"
                 JMETER_URL="https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz"
 
-                # Create the base directory if it doesn't already exist
+                # Create the base directory if it doesn\'t already exist
                 mkdir -p /home/jenkins/jmeter
 
                 # Check if the tarball already exists
@@ -62,7 +62,7 @@ pipeline {
                 JMETER_TARBALL="/home/jenkins/jmeter/apache-jmeter-5.6.3.tgz"
                 JMETER_URL="https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz"
 
-                # Create the base directory if it doesn't already exist
+                # Create the base directory if it doesn\'t already exist
                 mkdir -p /home/jenkins/jmeter
 
                 # Check if the tarball already exists
@@ -112,13 +112,8 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       }
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh """
-                                                               /opt/sonar-scanner/bin/sonar-scanner \
-                                                               -Dsonar.projectKey=jenkins \
-                                                               -Dsonar.sources=. \
-                                                               -Dsonar.host.url=http://192.168.1.17:9000 \
-                                                               -Dsonar.token=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e \
-                                                               """
+          sh '''
+                                                               /opt/sonar-scanner/bin/sonar-scanner                                                                -Dsonar.projectKey=jenkins                                                                -Dsonar.sources=.                                                                -Dsonar.host.url=http://192.168.1.17:9000                                                                -Dsonar.token=sqa_f69ecb943fcd80837261e68a0245ab4a8a3dc93e                                                                '''
         }
 
       }
@@ -132,6 +127,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
 
       }
       steps {
+        sleep(unit: 'MINUTES', time: 1)
         script {
           timeout(time: 5, unit: 'MINUTES') {
             def qg = waitForQualityGate() // This checks the SonarQube Quality Gate result
