@@ -90,7 +90,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
       steps {
         withSonarQubeEnv('SonarQube') {
           sh """
-                                                               ${SONARQUBE_SCANNER_HOME}/bin/sonar-scanner \
+                                                               /opt/sonar-scanner/bin/sonar-scanner \
                                                                -Dsonar.projectKey=jenkins \
                                                                -Dsonar.sources=. \
                                                                -Dsonar.host.url=http://192.168.1.17:9000 \
