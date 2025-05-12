@@ -131,7 +131,7 @@ git clone https://github.com/ankushsethi/jenkins.git'''
         script {
           timeout(time: 5, unit: 'MINUTES') {
             def qg = waitForQualityGate() // This checks the SonarQube Quality Gate result
-            if (qg.status != 'SUCCESS') {
+            if (qg.status != 'OK') {
               error "Pipeline aborted because Quality Gate failed: ${qg.status}"
             }
           }
