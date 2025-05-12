@@ -56,10 +56,33 @@ pipeline {
           }
           steps {
             echo 'Building on Node1'
-            sh '''mkdir -p /home/jenkins/jmeter
-cd /home/jenkins/jmeter
-curl -O https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
-tar -xzf apache-jmeter-5.6.3.tgz'''
+            sh '''
+            # Define the installation directory and file
+                JMETER_INSTALL_DIR="/home/jenkins/jmeter/apache-jmeter-5.6.3"
+                JMETER_TARBALL="/home/jenkins/jmeter/apache-jmeter-5.6.3.tgz"
+                JMETER_URL="https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz"
+
+                # Create the base directory if it doesn't already exist
+                mkdir -p /home/jenkins/jmeter
+
+                # Check if the tarball already exists
+                if [ ! -f "$JMETER_TARBALL" ]; then
+                    echo "$JMETER_TARBALL not found. Downloading..."
+                    curl -O "$JMETER_URL" || { echo "Failed to download JMeter tarball"; exit 1; }
+                else
+                    echo "$JMETER_TARBALL already exists."
+                fi
+
+                # Check if the JMeter directory is already extracted
+                if [ ! -d "$JMETER_INSTALL_DIR" ]; then
+                    echo "$JMETER_INSTALL_DIR not found. Extracting..."
+                    tar -xzf "$JMETER_TARBALL" || { echo "Failed to extract JMeter tarball"; exit 1; }
+                else
+                    echo "$JMETER_INSTALL_DIR already exists. Skipping extraction."
+                fi
+
+                echo "JMeter setup complete!"
+            '''
           }
         }
 
